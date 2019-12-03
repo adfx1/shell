@@ -132,5 +132,4 @@ check_user()
 while :
 do
     normal_list
-    normal_list
 done
