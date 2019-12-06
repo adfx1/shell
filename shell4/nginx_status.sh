@@ -23,27 +23,59 @@ do
         case $wish in
           1)
             echo "nginx status"
-            echo "systemtl status nginx > /dev/null"
+            systemctl status nginx 
             continue
             ;;
           2)
             echo "start nginx"
-            echo "systemtl start nginx > /dev/null"
+            systemctl start nginx > /dev/null
+            curl localhost &> /dev/null
+            if [ $? -ne 0 ]
+            then
+                /usr/sbin/nginx
+                if [ $? -ne 0 ]
+                then 
+                    echo "can't start nginx ,please check "
+                fi
+            else
+                echo "nginx is starting"
+            fi
             continue
             ;;
           3)
             echo "stop nginx"
-            echo "sytemctl stop nginx > /dev/null"
+            systemctl stop nginx > /dev/null
+            curl localhost &> /dev/null
+            if [ $? -ne 0 ]
+            then
+                echo "have some problem,can't stop nginx"
+            else
+                echo "nginx is stopped"
+            fi
             continue
             ;;
           4)
             echo "restart nginx"
-            echo "systemctl restart nginx > /dev/null"
+            systemctl restart nginx > /dev/null
+            sleep 1
+            curl localhost &>/dev/null
+            if [ $? -ne 0 ]
+            then
+                /usr/sbin/nginx
+                sleep 1
+                curl localhost $>/dev/null
+                if [ $? -ne 0 ]
+                then
+                    echo "can't restart nginx"
+                fi
+            else
+                echo "nginx has been restarted"
+            fi
             continue
             ;;
           5)
             echo "reload nginx"
-            echo "systemctl reload nginx > /dev/null"
+            systemctl reload nginx > /dev/null
             ;;
           6)
             echo "exit"
