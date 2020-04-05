@@ -8,4 +8,4 @@
 ##############################################################################
 
 nowLodAvg=$(uptime |awk -F ": " '{print $2}'|awk -F "," '{print $1}')
-[ ${nowLodAvg%%.*} -ge 2 ] && echo "silly" || echo "haha"
+[ ${nowLodAvg%%.*} -ge 2 ] && echo "大于2" || echo "小于2"
